@@ -1,0 +1,19 @@
+05/05/2021;19;Atacadão;Fazer a feira.
+09/05/2021;8;ICNV Recife;Ensaios e Cultos.
+15/05/2021;10;Casa Forte;Ensaio da entrada de madrinhas e padrinhos.
+06/05/2021;16;Casa;Jogar
+06/05/2021;17;Casa;Voltar a estudar
+06/05/2021;18;Casa;Verificar se vai ter aula
+06/05/2021;19;Escola;Assistir aula
+06/05/2021;14;;Era pra jogar
+06/05/2021;12;;Era pra eu ter jogado, na moral
+06/05/2021;9;Casa;Acordar e tomar banho.
+06/05/2021;10;Casa;Aula de inglês.
+06/05/2021;11;Casa;Aulas de programação.
+06/05/2021;20;Rua;Dar uma carreirinha
+06/05/2021;22;Casa;Tomar banho
+06/05/2021;23;Casa;Ser feliz.
+16/05/2021;8;ICNV;Ensaio
+07/05/2021;9;Quarto;Acordar.
+05/06/2021;9;;Aniversário de Thatá
+07/05/2021;2;Quarto;Dormir

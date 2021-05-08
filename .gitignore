@@ -1,0 +1,4 @@
+
+app agenda.txt
+*.xml
+*.properties
