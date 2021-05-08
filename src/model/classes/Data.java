@@ -1,6 +1,6 @@
 package model.classes;
 
-/**
+/** 
  * @author RafaelRodrigues1
  */
 public class Data implements Comparable<Data>{
@@ -8,7 +8,7 @@ public class Data implements Comparable<Data>{
     private Integer dia;
     private Integer mes;
     private Integer ano;
-
+        //CLASSE NÃO SERÁ USADA
     public Data(String data) {
         String[] datas = data.split("/");
         this.dia = Integer.parseInt(datas[0]);

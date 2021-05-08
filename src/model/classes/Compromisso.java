@@ -1,27 +1,31 @@
 package model.classes;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @author RafaelRodrigues1
  */
 public class Compromisso implements Comparable<Compromisso> {
+    private final SimpleDateFormat dataFormatada = new SimpleDateFormat("dd/MM/yyyy");
+    private final SimpleDateFormat horarioFormatado = new SimpleDateFormat("HH:mm");
     
     private String descricao;
-    private Data data;
-    private Integer horario;
+    private Date data;
+    private String horario;
     private String local;
-
-
-    public Compromisso(String descricao, Data data, Integer horario) {
+    
+    public Compromisso(String descricao, Date data) {
         this.descricao = descricao;
         this.data = data;
-        this.horario = horario;
+        this.horario = horarioFormatado.format(data);
     }
 
-    public Compromisso(String descricao, Data data, Integer horario, String local) {
+    public Compromisso(String descricao, Date data, String local) {
         this.descricao = descricao;
         this.data = data;
-        this.horario = horario;
         this.local = local;
+        this.horario = horarioFormatado.format(data);
     }
 
     public String getDescricao() {
@@ -32,26 +36,26 @@ public class Compromisso implements Comparable<Compromisso> {
         this.descricao = descricao;
     }
 
-    public Data getData() {
-        return data;
+    public String getData() {
+        return dataFormatada.format(this.data); 
     }
 
-    public void setData(Data data) {
+    public void setData(Date data) {
         this.data = data;
     }
 
-    public Integer getHorario() {
+    public String getHorario() {
         return horario;
     }
 
-    public void setHorario(Integer horario) {
+    public void setHorario(String horario) {
         this.horario = horario;
     }
 
     @Override
     public String toString(){
         return "Data: " + this.getData() + "\n"
-                + "Horário: " + this.horario + " horas" + ""
+                + "Horário: " + this.horario + " horas" + "\n"
                 + "Tarefa: " + this.getDescricao();
     }
 
@@ -65,10 +69,6 @@ public class Compromisso implements Comparable<Compromisso> {
 
     @Override
     public int compareTo(Compromisso o) {
-        if(this.data.equals(o.getData())){
-            return this.getHorario().compareTo(o.getHorario());
-        }else{
-            return this.getData().compareTo(o.getData());
-        }
+        return this.data.compareTo(o.data);
     }  
 }

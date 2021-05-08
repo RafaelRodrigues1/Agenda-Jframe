@@ -63,7 +63,7 @@
                       <Component id="jButtonConsult" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="47" max="32767" attributes="0"/>
+              <EmptySpace pref="17" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -122,12 +122,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Data(DD/MM/YYYY)"/>
+        <Property name="text" type="java.lang.String" value="Data(dd/mm/yyyy)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Hor&#xe1;rio do compromisso"/>
+        <Property name="text" type="java.lang.String" value="Hor&#xe1;rio do compromisso(hh:mm)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">

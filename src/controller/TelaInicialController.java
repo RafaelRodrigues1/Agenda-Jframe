@@ -1,12 +1,12 @@
 package controller;
 
-import java.util.Optional;
 import model.classes.Compromisso;
 import model.classes.CompromissoRN;
-import model.classes.Data;
 import view.TelaConsulta;
 import view.TelaInicial;
 import java.lang.Exception;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -17,28 +17,38 @@ public class TelaInicialController {
     
     private final TelaInicial telaInicial;
     private final CompromissoRN compromissoRN = new CompromissoRN(this);
-
+    
+    private final SimpleDateFormat dataFormatada = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    
     public TelaInicialController(TelaInicial telaInicial) {
         this.telaInicial = telaInicial;
     }
     
     public void addCompromisso(){
         try{
-            if(!telaInicial.getjTextAreaCompromisso().getText().isBlank()||telaInicial.getjTextFieldData().getText().isBlank()){
-                Data data = new Data(telaInicial.getjTextFieldData().getText());
-                Integer horario = Integer.parseInt(telaInicial.getjTextFieldHora().getText());
+            if(!telaInicial.getjTextAreaCompromisso().getText().isBlank()
+                    ||!telaInicial.getjTextFieldData().getText().isBlank()
+                    ||!telaInicial.getjTextFieldHora().getText().isBlank()){
+                String dataStr = telaInicial.getjTextFieldData().getText();
+                String hora = telaInicial.getjTextFieldHora().getText();
+                System.out.println(dataStr + " " + hora);
+                Date data = dataFormatada.parse(dataStr + " " + hora);
+                System.out.println(data);
                 String local = telaInicial.getjTextFieldLocal().getText();
                 String descricao = telaInicial.getjTextAreaCompromisso().getText();
-                Compromisso compromisso = new Compromisso(descricao, data, horario, local);
+                Compromisso compromisso = new Compromisso(descricao, data, local);
+                System.out.println(compromisso);
                 if(compromissoRN.adicionaCompromisso(compromisso)){
                     telaInicial.mostraMsg("Compromisso adicionado");
                 }else{
-                    telaInicial.mostraMsg("Erro ao adicionar compromisso!");
+                    telaInicial.mostraMsg("OPAErro ao adicionar compromisso!");
                 }
             }else{
                 throw new Exception();
             }
         }catch(Exception ex){
+            ex.printStackTrace();
+            System.out.println(ex.getMessage());
             telaInicial.mostraMsg("Erro ao adicionar compromisso!");
         }
     }

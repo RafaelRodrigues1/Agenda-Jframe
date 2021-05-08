@@ -35,15 +35,15 @@ public class TelaConsultaController {
             DefaultTableModel tableModel = (DefaultTableModel) telaConsulta.getjTable1().getModel();
             tableModel.setNumRows(0);
             for(Compromisso compromisso: compromissoList){
-                tableModel.addRow(new Object[]{compromisso.getData().toString(),compromisso.getHorario().toString(),
-                                   compromisso.getDescricao(), compromisso.getLocal()});      
+                tableModel.addRow(new Object[]{compromisso.getData(),compromisso.getHorario(),
+                compromisso.getDescricao(), compromisso.getLocal()});      
             }
             this.telaConsulta.setVisible(true);
             return true;
-            }else{
-                telaConsulta.setVisible(false);
-                return false;
-            }
+        }else{
+            telaConsulta.setVisible(false);
+            return false;
+        }
     }
     
     public void voltar(){        

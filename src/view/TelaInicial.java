@@ -66,9 +66,9 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Data(DD/MM/YYYY)");
+        jLabel1.setText("Data(dd/mm/yyyy)");
 
-        jLabel2.setText("Horário do compromisso");
+        jLabel2.setText("Horário do compromisso(hh:mm)");
 
         jLabel3.setText("Compromisso");
 
@@ -118,7 +118,7 @@ public class TelaInicial extends javax.swing.JFrame {
                         .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(48, 48, 48)
                         .addComponent(jButtonConsult)))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
