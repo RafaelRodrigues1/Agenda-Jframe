@@ -47,8 +47,6 @@ public class TelaInicialController {
                 throw new Exception();
             }
         }catch(Exception ex){
-            ex.printStackTrace();
-            System.out.println(ex.getMessage());
             telaInicial.mostraMsg("Erro ao adicionar compromisso!");
         }
     }
