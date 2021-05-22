@@ -1,11 +1,9 @@
 package controller;
 
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import model.classes.Compromisso;
 import model.classes.CompromissoRN;
-import model.classes.Data;
 import view.TelaConsulta;
 import view.TelaInicial;
 
@@ -21,31 +19,29 @@ public class TelaConsultaController {
         
     }
     
-    public Boolean consultaCompromisso(String data){
-        try{
-            
+    public Boolean consultaCompromisso(String data) throws Exception {
+        try{            
             return this.preencheTabela(compromissoRN.consultaCompromisso(data));
         }catch(Exception ex){
-            return false;
+             throw new Exception();
         }
     }
     
-    public Boolean preencheTabela(List<Compromisso> compromissoList){       
-        if(!compromissoList.isEmpty()){
+    public Boolean preencheTabela(List<String> compromissoStr){       
+        if(!compromissoStr.isEmpty()){
             DefaultTableModel tableModel = (DefaultTableModel) telaConsulta.getjTable1().getModel();
             tableModel.setNumRows(0);
-            for(Compromisso compromisso: compromissoList){
-                tableModel.addRow(new Object[]{compromisso.getData(),compromisso.getHorario(),
-                compromisso.getDescricao(), compromisso.getLocal()});      
+            for(String compromisso: compromissoStr){
+                String[] linha = compromisso.split(";");
+                tableModel.addRow(new Object[]{linha[0], linha[1],
+                linha[2], linha[3]});      
             }
             this.telaConsulta.setVisible(true);
             return true;
         }else{
-            telaConsulta.setVisible(false);
             return false;
         }
     }
-    
     public void voltar(){        
         TelaInicial telaInicial = new TelaInicial();
         telaInicial.setVisible(true);

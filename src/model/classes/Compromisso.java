@@ -1,31 +1,28 @@
 package model.classes;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * @author RafaelRodrigues1
  */
 public class Compromisso implements Comparable<Compromisso> {
-    private final SimpleDateFormat dataFormatada = new SimpleDateFormat("dd/MM/yyyy");
-    private final SimpleDateFormat horarioFormatado = new SimpleDateFormat("HH:mm");
+    
     
     private String descricao;
-    private Date data;
-    private String horario;
+    private LocalDateTime dataHora;
     private String local;
     
-    public Compromisso(String descricao, Date data) {
+    public Compromisso(String descricao, LocalDateTime dataHora) {
         this.descricao = descricao;
-        this.data = data;
-        this.horario = horarioFormatado.format(data);
+        this.dataHora = dataHora;
     }
 
-    public Compromisso(String descricao, Date data, String local) {
+    public Compromisso(String descricao, LocalDateTime dataHora, String local) {
         this.descricao = descricao;
-        this.data = data;
+        this.dataHora = dataHora;
         this.local = local;
-        this.horario = horarioFormatado.format(data);
     }
 
     public String getDescricao() {
@@ -36,30 +33,29 @@ public class Compromisso implements Comparable<Compromisso> {
         this.descricao = descricao;
     }
 
-    public String getData() {
-        return dataFormatada.format(this.data); 
+    public LocalDateTime getDataHora() {
+        return dataHora;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public LocalDate getData(){
+        return dataHora.toLocalDate();
     }
-
-    public String getHorario() {
-        return horario;
-    }
-
-    public void setHorario(String horario) {
-        this.horario = horario;
+    
+    public LocalTime getHora(){
+        return dataHora.toLocalTime();
     }
 
     @Override
     public String toString(){
         return "Data: " + this.getData() + "\n"
-                + "Horário: " + this.horario + " horas" + "\n"
+                + "Horário: " + this.getHora() + "\n"
                 + "Tarefa: " + this.getDescricao();
     }
 
     public String getLocal() {
+        if(local.isEmpty()){
+            local =" ";
+        }
         return local;
     }
 
@@ -69,6 +65,6 @@ public class Compromisso implements Comparable<Compromisso> {
 
     @Override
     public int compareTo(Compromisso o) {
-        return this.data.compareTo(o.data);
+        return this.dataHora.compareTo(o.getDataHora());
     }  
 }
