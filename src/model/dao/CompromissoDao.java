@@ -26,18 +26,20 @@ public class CompromissoDao {
     
     private CompromissoRN compromissoRN;
     
-    private Connection con = null;
+
     
     public CompromissoDao(CompromissoRN compromissoRN) {
         this.compromissoRN = compromissoRN;
-        con = DataBaseAgenda.getConnection();
+        
     }
     
     public Boolean adicionaCompromisso(Compromisso compromisso){  
         PreparedStatement pst = null;
+        Connection con = null;
         long dataHora = compromisso.getDataHora().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        try{            
-            String sql = "INSERT INTO compromisso(data, horario, local, descricao) VALUES (?, ?, ?, ?)";
+        try{        
+            con = DataBaseAgenda.getConnection();
+            String sql = "INSERT INTO compromisso(data, horario, local, descricao) VALUES (?, ?, ?, ?);";
             pst = con.prepareStatement(sql);
             pst.setDate(1, new Date(dataHora));
             pst.setTime(2, new Time(dataHora));
@@ -55,14 +57,16 @@ public class CompromissoDao {
     
     public List<Compromisso> consultaCompromisso(LocalDate consultaDB){
         List<Compromisso> compromissoList = new ArrayList<>();
+        Connection con = null;
         Statement stat = null;
         ResultSet resu = null;
         try{
+            con = DataBaseAgenda.getConnection();
             stat = con.createStatement(); //Dando bronca a partir da segunda consulta
             if(consultaDB == null){
-                resu = stat.executeQuery("select * from compromisso");
+                resu = stat.executeQuery("select * from compromisso;");
             }else{
-                resu = stat.executeQuery("select * from compromisso where data = '" + consultaDB+"'");
+                resu = stat.executeQuery("select * from compromisso where data = '" + consultaDB+"';");
             } 
             while(resu.next()){
                 LocalDate data = resu.getDate("data").toLocalDate();

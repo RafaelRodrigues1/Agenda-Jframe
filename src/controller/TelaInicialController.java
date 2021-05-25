@@ -17,11 +17,12 @@ import java.util.regex.Pattern;
 public class TelaInicialController {
     
     private final TelaInicial telaInicial;
-    private final CompromissoRN compromissoRN = new CompromissoRN(this);
+    private final CompromissoRN compromissoRN;
     
     
     public TelaInicialController(TelaInicial telaInicial) {
         this.telaInicial = telaInicial;
+        compromissoRN = new CompromissoRN(this);
     }
     
     public void addCompromisso(){
@@ -75,6 +76,10 @@ public class TelaInicialController {
             System.out.println(ex.getMessage());
             telaInicial.mostraMsg("Erro ao Consultar compromisso!\nFomato da data - DD/MM/YYYY");
         }    
+    }
+    
+    public void imprimePdf(){
+        compromissoRN.imprimePdf();
     }
     
 }

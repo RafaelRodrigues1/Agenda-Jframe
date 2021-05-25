@@ -62,4 +62,9 @@ public class CompromissoRN {
         System.out.println();
         return compromissoStr;
     }
+    
+    public void imprimePdf(){
+        List<Compromisso> compromissoList = compromissoDao.consultaCompromisso(null);
+        ServicoImpressao serv = new ServicoImpressao(compromissoList);
+    }
 }
