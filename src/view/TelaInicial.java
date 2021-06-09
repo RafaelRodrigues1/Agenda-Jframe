@@ -276,15 +276,4 @@ public class TelaInicial extends javax.swing.JFrame {
     public void setjTextFieldLocal(JTextField jTextFieldLocal) {
         this.jTextFieldLocal = jTextFieldLocal;
     }
-    
-    public Integer consultaGeral(){
-        int resp = JOptionPane.showConfirmDialog(null, "Deseja consultar todos os compromisso?","Confirmação", JOptionPane.YES_NO_OPTION);
-        return resp;
-    }
-            
-    
-    public void mostraMsg(String string){
-        JOptionPane.showMessageDialog(null, string);
-    }
-    
 }

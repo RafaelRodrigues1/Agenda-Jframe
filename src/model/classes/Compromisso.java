@@ -9,10 +9,11 @@ import java.time.LocalTime;
  */
 public class Compromisso implements Comparable<Compromisso> {
     
-    
+    private Integer id;
     private String descricao;
     private LocalDateTime dataHora;
     private String local;
+    
     
     public Compromisso(String descricao, LocalDateTime dataHora) {
         this.descricao = descricao;
@@ -20,6 +21,13 @@ public class Compromisso implements Comparable<Compromisso> {
     }
 
     public Compromisso(String descricao, LocalDateTime dataHora, String local) {
+        this.descricao = descricao;
+        this.dataHora = dataHora;
+        this.local = local;
+    }
+
+    public Compromisso(Integer id, String descricao, LocalDateTime dataHora, String local) {
+        this.id = id;
         this.descricao = descricao;
         this.dataHora = dataHora;
         this.local = local;
@@ -63,6 +71,10 @@ public class Compromisso implements Comparable<Compromisso> {
         this.local = local;
     }
 
+    public Integer getId() {
+        return id;
+    }
+    
     @Override
     public int compareTo(Compromisso o) {
         return this.dataHora.compareTo(o.getDataHora());

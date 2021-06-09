@@ -23,10 +23,15 @@ import model.classes.CompromissoRN;
  */
 public class CompromissoDao {
     
-    
+    private Connection con = null;
+    private Statement stat = null;
+    PreparedStatement pst = null;
+    private ResultSet resu = null;
     private CompromissoRN compromissoRN;
-    
 
+    public CompromissoDao() {
+        
+    }
     
     public CompromissoDao(CompromissoRN compromissoRN) {
         this.compromissoRN = compromissoRN;
@@ -34,8 +39,6 @@ public class CompromissoDao {
     }
     
     public Boolean adicionaCompromisso(Compromisso compromisso){  
-        PreparedStatement pst = null;
-        Connection con = null;
         long dataHora = compromisso.getDataHora().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         try{        
             con = DataBaseAgenda.getConnection();
@@ -46,7 +49,7 @@ public class CompromissoDao {
             pst.setString(3, compromisso.getLocal());
             pst.setString(4, compromisso.getDescricao());
             int rowsAffected = pst.executeUpdate();
-            return rowsAffected>0;
+            return rowsAffected == 1;
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
             return false;
@@ -57,9 +60,6 @@ public class CompromissoDao {
     
     public List<Compromisso> consultaCompromisso(LocalDate consultaDB){
         List<Compromisso> compromissoList = new ArrayList<>();
-        Connection con = null;
-        Statement stat = null;
-        ResultSet resu = null;
         try{
             con = DataBaseAgenda.getConnection();
             stat = con.createStatement(); //Dando bronca a partir da segunda consulta
@@ -71,14 +71,55 @@ public class CompromissoDao {
             while(resu.next()){
                 LocalDate data = resu.getDate("data").toLocalDate();
                 LocalTime hora = resu.getTime("horario").toLocalTime();
-                compromissoList.add(new Compromisso(resu.getString("descricao"), LocalDateTime.of(data, hora),
+                compromissoList.add(new Compromisso(resu.getInt("id"), 
+                        resu.getString("descricao"), LocalDateTime.of(data, hora),
                         resu.getString("local")));
             }
             return compromissoList;
         }catch(SQLException ex){
+            ex.printStackTrace();
             throw new DBException(ex.getMessage());
         }finally{
             DataBaseAgenda.closeConnection(resu, stat, con);
+        }
+    }
+    
+    public Boolean alteraCompromisso(Compromisso compromisso){
+        try{
+            long dataHora = compromisso.getDataHora().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+            con = DataBaseAgenda.getConnection();
+            String sql = "UPDATE compromisso "
+                    + "SET data = ? , horario = ? , local = ? , descricao = ? "
+                    + "WHERE id = ? LIMIT 1 ";
+            pst = con.prepareStatement(sql);
+            pst.setDate(1, new Date(dataHora));
+            pst.setTime(2, new Time(dataHora));
+            pst.setString(3, compromisso.getLocal());
+            pst.setString(4, compromisso.getDescricao());
+            pst.setInt(5, compromisso.getId());
+            int rowsAffected = pst.executeUpdate();
+            return rowsAffected == 1;
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+            return false;
+        }finally{
+            DataBaseAgenda.closeConnection(pst, con);
+        }
+    }
+    
+    public Boolean deletaCompromisso(Integer id){
+        try{
+            con = DataBaseAgenda.getConnection();
+            String sql = "DELETE FROM compromisso WHERE id = ? LIMIT 1;";
+            pst = con.prepareStatement(sql);
+            pst.setInt(1, id);
+            int rowsAffected = pst.executeUpdate();
+            return rowsAffected == 1;
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+            return false;
+        }finally{
+            DataBaseAgenda.closeConnection(pst, con);
         }
     }
 }

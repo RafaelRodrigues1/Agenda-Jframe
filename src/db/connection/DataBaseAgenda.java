@@ -14,11 +14,10 @@ import java.sql.Statement;
  */
 public class DataBaseAgenda {
 
-    //private static Connection conn = null;   
+    //private static Connection conn = null;
     
     public static Connection getConnection(){
         Connection conn = null;
-        //if(conn == null){
             try{               
                 Properties props = loadProperties();
                 String url = props.getProperty("dburl");
@@ -26,7 +25,6 @@ public class DataBaseAgenda {
             }catch(SQLException ex){
                 throw new DBException(ex.getMessage());
             }
-       // }
         return conn;
     }
     

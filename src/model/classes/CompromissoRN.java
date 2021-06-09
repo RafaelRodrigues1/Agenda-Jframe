@@ -43,9 +43,18 @@ public class CompromissoRN {
         }
     }
     
-    public List<String> consultaCompromisso(String data1) throws Exception{
+    public Boolean alteraCompromisso(Integer id, String descricao, String data, String hora, String local){
+        LocalDateTime dataHora = LocalDateTime.parse(data + " " + hora, dtf);
+        Compromisso compromisso = new Compromisso(id, descricao, dataHora, local); 
+        return compromissoDao.alteraCompromisso(compromisso);
+    }
+    
+    public Boolean deletaCompromisso(Integer id){
+        return compromissoDao.deletaCompromisso(id);
+    }
+    
+    public List<Compromisso> consultaCompromisso(String data1) throws Exception{
         List<Compromisso> compromissoList;
-        List<String> compromissoStr = new ArrayList<>();
         if(!data1.isBlank()){
             LocalDate dataT = LocalDate.parse(data1, dataForm);
             compromissoList = compromissoDao.consultaCompromisso(dataT);
@@ -53,18 +62,12 @@ public class CompromissoRN {
             compromissoList = compromissoDao.consultaCompromisso(null);
         } 
         Collections.sort(compromissoList);        
-        compromissoList.forEach(compromisso -> {
-            
-            compromissoStr.add(dataForm.format(compromisso.getData())+";"+
-                    horaForm.format(compromisso.getHora())+";"+compromisso.getDescricao()+";"+
-                    compromisso.getLocal());
-        });
-        System.out.println();
-        return compromissoStr;
+        return compromissoList;
     }
     
     public void imprimePdf(){
         List<Compromisso> compromissoList = compromissoDao.consultaCompromisso(null);
+        Collections.sort(compromissoList); 
         ServicoImpressao serv = new ServicoImpressao(compromissoList);
     }
 }
