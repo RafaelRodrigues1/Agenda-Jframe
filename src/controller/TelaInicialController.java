@@ -58,6 +58,7 @@ public class TelaInicialController {
                     if(resp==0){
                         if(telaConsultaController.consultaCompromisso(data)){
                             telaInicial.setVisible(false);
+                            telaConsultaController.getTelaConsulta().setVisible(true);
                         }
                     }                
                 }else{  
@@ -79,5 +80,4 @@ public class TelaInicialController {
     public void imprimePdf(){
         compromissoRN.imprimePdf();
     }
-    
 }

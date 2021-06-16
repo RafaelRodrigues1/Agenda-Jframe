@@ -14,13 +14,14 @@ import javax.swing.JTable;
  */
 public class TelaConsulta extends javax.swing.JFrame {
         private final TelaConsultaController controller;
+        private String data;
     /**
      * Creates new form TelaMostraCompromissos
      */
     public TelaConsulta() {
         initComponents();
         setLocationRelativeTo(null);
-        controller = new TelaConsultaController(this);
+        this.controller = new TelaConsultaController(this);
     }
 
     /**
@@ -183,6 +184,14 @@ public class TelaConsulta extends javax.swing.JFrame {
         this.jTable1 = jTable1;
     }
 
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getData() {
+        return data;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAlterar;
     private javax.swing.JButton jButtonDeletar;

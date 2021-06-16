@@ -16,9 +16,8 @@ import java.time.format.DateTimeFormatter;
 public class CompromissoRN {
     
     
-    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-    private DateTimeFormatter dataForm = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private DateTimeFormatter horaForm = DateTimeFormatter.ofPattern("HH:mm");
+    private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    private final DateTimeFormatter dataForm = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private TelaInicialController telaInicialController;
     private TelaConsultaController telaConsultaController;
     private final CompromissoDao compromissoDao;

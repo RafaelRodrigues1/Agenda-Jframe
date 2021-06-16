@@ -18,13 +18,15 @@ public class TelaConsultaController {
     private DateTimeFormatter horaForm = DateTimeFormatter.ofPattern("HH:mm");
     private final TelaConsulta telaConsulta;
     private final CompromissoRN compromissoRN = new CompromissoRN(this);
+
+    
     public TelaConsultaController(TelaConsulta telaConsulta) {
         this.telaConsulta = telaConsulta;
-        
     }
     
     public Boolean consultaCompromisso(String data) throws Exception {
-        try{            
+        try{  
+            telaConsulta.setData(data);
             return this.preencheTabela(compromissoRN.consultaCompromisso(data));
         }catch(Exception ex){
             ex.printStackTrace();
@@ -56,7 +58,7 @@ public class TelaConsultaController {
             int id = (int) telaConsulta.getjTable1().getValueAt(row, 0);
             if(compromissoRN.deletaCompromisso(id)){
                 Panes.mostraMsg("Compromisso deletado com sucesso");
-                telaConsulta.getjTable1().removeRowSelectionInterval(row, row+3);
+                consultaCompromisso(telaConsulta.getData());
             }else{
                 throw new Exception("Erro ao deletar compromisso");
             }
@@ -76,7 +78,6 @@ public class TelaConsultaController {
                 tableModel.addRow(new Object[]{compromisso.getId(), data,
                 hora, compromisso.getDescricao(), compromisso.getLocal()});      
             }
-            this.telaConsulta.setVisible(true);
             return true;
         }else{
             return false;
@@ -86,5 +87,9 @@ public class TelaConsultaController {
         TelaInicial telaInicial = new TelaInicial();
         telaInicial.setVisible(true);
         telaConsulta.setVisible(false);
+    }
+
+    public TelaConsulta getTelaConsulta() {
+        return telaConsulta;
     }
 }

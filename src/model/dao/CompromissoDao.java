@@ -25,13 +25,9 @@ public class CompromissoDao {
     
     private Connection con = null;
     private Statement stat = null;
-    PreparedStatement pst = null;
+    private PreparedStatement pst = null;
     private ResultSet resu = null;
-    private CompromissoRN compromissoRN;
-
-    public CompromissoDao() {
-        
-    }
+    private final CompromissoRN compromissoRN;
     
     public CompromissoDao(CompromissoRN compromissoRN) {
         this.compromissoRN = compromissoRN;
