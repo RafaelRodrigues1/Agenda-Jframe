@@ -1,35 +1,61 @@
 package model.classes;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author RafaelRodrigues1
  */
-public class Compromisso implements Comparable<Compromisso> {
+
+@Entity
+@Table(name = "compromisso")
+public class Compromisso implements Comparable<Compromisso>, Serializable {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
+    @Column(name = "descricao", nullable = false, length = 50)
     private String descricao;
-    private LocalDateTime dataHora;
+    
+    @Column(name = "data", nullable = false)
+    private LocalDate data;
+    
+    @Column(name = "horario", nullable = false)
+    private LocalTime hora;
+    
+    @Column(name = "local", length = 20)
     private String local;
+
+    public Compromisso() {
+    }  
     
-    
-    public Compromisso(String descricao, LocalDateTime dataHora) {
+    public Compromisso(String descricao, LocalDate data, LocalTime hora) {
         this.descricao = descricao;
-        this.dataHora = dataHora;
+        this.data = data;
+        this.hora = hora;
     }
 
-    public Compromisso(String descricao, LocalDateTime dataHora, String local) {
+    public Compromisso(String descricao, LocalDate data, LocalTime hora, String local) {
         this.descricao = descricao;
-        this.dataHora = dataHora;
+        this.data = data;
+        this.hora = hora;
         this.local = local;
     }
 
-    public Compromisso(Integer id, String descricao, LocalDateTime dataHora, String local) {
+    public Compromisso(Integer id, String descricao, LocalDate data, LocalTime hora, String local) {
         this.id = id;
         this.descricao = descricao;
-        this.dataHora = dataHora;
+        this.data = data;
+        this.hora = hora;
         this.local = local;
     }
 
@@ -41,16 +67,24 @@ public class Compromisso implements Comparable<Compromisso> {
         this.descricao = descricao;
     }
 
-    public LocalDateTime getDataHora() {
-        return dataHora;
+    public LocalDate getData() {
+        return data;
     }
 
-    public LocalDate getData(){
-        return dataHora.toLocalDate();
+    public void setData(LocalDate data) {
+        this.data = data;
     }
-    
-    public LocalTime getHora(){
-        return dataHora.toLocalTime();
+
+    public LocalTime getHora() {
+        return hora;
+    }
+
+    public void setHora(LocalTime hora) {
+        this.hora = hora;
+    }
+
+    public LocalDateTime getDateTime(){
+        return LocalDateTime.of(this.data, this.hora);
     }
 
     @Override
@@ -77,6 +111,6 @@ public class Compromisso implements Comparable<Compromisso> {
     
     @Override
     public int compareTo(Compromisso o) {
-        return this.dataHora.compareTo(o.getDataHora());
+        return this.getDateTime().compareTo(o.getDateTime());
     }  
 }

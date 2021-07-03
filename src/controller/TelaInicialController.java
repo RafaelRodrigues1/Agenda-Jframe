@@ -1,10 +1,11 @@
 package controller;
 
-import model.classes.CompromissoRN;
+import model.beans.CompromissoRN;
 import view.TelaConsulta;
 import view.TelaInicial;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import model.beans.TipoOperacao;
 import model.classes.Panes;
 
 
@@ -32,7 +33,7 @@ public class TelaInicialController {
                 String hora = telaInicial.getjTextFieldHora().getText();
                 String local = telaInicial.getjTextFieldLocal().getText();
                 String descricao = telaInicial.getjTextAreaCompromisso().getText();
-                if(compromissoRN.adicionaCompromisso(descricao, dataStr, hora, local)){
+                if(compromissoRN.direcionar(TipoOperacao.ADICIONAR, descricao, dataStr, hora, local)){
                     Panes.mostraMsg("Compromisso adicionado");
                 }else{
                     Panes.mostraMsg("OPA! Erro ao adicionar compromisso!");
@@ -57,12 +58,13 @@ public class TelaInicialController {
                     int resp = Panes.consultaGeral("Deseja consultar todos os compromisso?");
                     if(resp==0){
                         if(telaConsultaController.consultaCompromisso(data)){
-                            telaInicial.setVisible(false);
                             telaConsultaController.getTelaConsulta().setVisible(true);
+                            telaInicial.setVisible(false);                            
                         }
                     }                
                 }else{  
                     if(telaConsultaController.consultaCompromisso(data)){
+                        telaConsultaController.getTelaConsulta().setVisible(true);
                         telaInicial.setVisible(false);
                     }else{
                         Panes.mostraMsg("Não há compromisso no dia " + telaInicial.getjTextFieldData().getText());

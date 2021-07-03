@@ -1,4 +1,4 @@
-package model.Dao;
+package model.dao;
 
 import db.connection.DBException;
 import db.connection.DataBaseAgenda;

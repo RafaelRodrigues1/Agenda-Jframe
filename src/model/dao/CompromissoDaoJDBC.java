@@ -1,4 +1,4 @@
-package model.Dao;
+package model.dao;
 
 import db.connection.DBException;
 import db.connection.DataBaseAgenda;
@@ -10,18 +10,17 @@ import java.sql.Time;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import model.classes.Compromisso;
-import model.classes.CompromissoRN;
+import model.beans.CompromissoRN;
 
 /**
  * @author RafaelRodrigues1
  */
-public class CompromissoDao {
+public class CompromissoDaoJDBC {
     
     private Connection con = null;
     private Statement stat = null;
@@ -29,13 +28,17 @@ public class CompromissoDao {
     private ResultSet resu = null;
     private final CompromissoRN compromissoRN;
     
-    public CompromissoDao(CompromissoRN compromissoRN) {
+    public CompromissoDaoJDBC(CompromissoRN compromissoRN) {
         this.compromissoRN = compromissoRN;
         
     }
+
+    public CompromissoDaoJDBC() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public Boolean adicionaCompromisso(Compromisso compromisso){  
-        long dataHora = compromisso.getDataHora().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long dataHora = compromisso.getDateTime().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         try{        
             con = DataBaseAgenda.getConnection();
             String sql = "INSERT INTO compromisso(data, horario, local, descricao) VALUES (?, ?, ?, ?);";
@@ -58,7 +61,7 @@ public class CompromissoDao {
         List<Compromisso> compromissoList = new ArrayList<>();
         try{
             con = DataBaseAgenda.getConnection();
-            stat = con.createStatement(); //Dando bronca a partir da segunda consulta
+            stat = con.createStatement();
             if(consultaDB == null){
                 resu = stat.executeQuery("select * from compromisso;");
             }else{
@@ -68,7 +71,7 @@ public class CompromissoDao {
                 LocalDate data = resu.getDate("data").toLocalDate();
                 LocalTime hora = resu.getTime("horario").toLocalTime();
                 compromissoList.add(new Compromisso(resu.getInt("id"), 
-                        resu.getString("descricao"), LocalDateTime.of(data, hora),
+                        resu.getString("descricao"), data, hora,
                         resu.getString("local")));
             }
             return compromissoList;
@@ -82,7 +85,7 @@ public class CompromissoDao {
     
     public Boolean alteraCompromisso(Compromisso compromisso){
         try{
-            long dataHora = compromisso.getDataHora().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+            long dataHora = compromisso.getDateTime().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
             con = DataBaseAgenda.getConnection();
             String sql = "UPDATE compromisso "
                     + "SET data = ? , horario = ? , local = ? , descricao = ? "

@@ -22,14 +22,14 @@ import java.time.format.DateTimeFormatter;
  */
 public final class ServicoImpressao {
     
-    private final DateTimeFormatter dataForm = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private final DateTimeFormatter horaForm = DateTimeFormatter.ofPattern("HH:mm");
-    private List<Compromisso> compromissoList;
-    private Document documento;
-    private PdfPTable tabela;
-
-    public ServicoImpressao(List<Compromisso> compromisso) {
-        this.compromissoList = compromisso;
+    private static final DateTimeFormatter dataForm = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter horaForm = DateTimeFormatter.ofPattern("HH:mm");
+    private static List<Compromisso> compromissoList;
+    private static Document documento;
+    private static PdfPTable tabela;
+    
+    public static void run(List<Compromisso> compromissoL){
+        compromissoList = compromissoL;
         documento = new Document();
         tabela = new PdfPTable(4);
         try {
@@ -44,14 +44,14 @@ public final class ServicoImpressao {
         }
     }
     
-    public void cabecalho(){
+    public static void cabecalho(){
         try {
             Paragraph titulo = new Paragraph();
             titulo.setAlignment(Element.ALIGN_CENTER);
             titulo.add(new Chunk("Relatório de compromissos", new Font(Font.FontFamily.HELVETICA, 20f)));
-            this.documento.add(titulo);
-            this.documento.add(new Paragraph(" "));
-            this.documento.add(new Paragraph(" "));
+            documento.add(titulo);
+            documento.add(new Paragraph(" "));
+            documento.add(new Paragraph(" "));
             PdfPCell cel1 = new PdfPCell(new Paragraph("Data", new Font(Font.FontFamily.TIMES_ROMAN, 14f)));
             PdfPCell cel2 = new PdfPCell(new Paragraph("Horário", new Font(Font.FontFamily.TIMES_ROMAN, 14f)));
             PdfPCell cel3 = new PdfPCell(new Paragraph("Descrição", new Font(Font.FontFamily.TIMES_ROMAN, 14f)));
@@ -65,7 +65,7 @@ public final class ServicoImpressao {
         }
     }
     
-    public void corpo(){
+    public static void corpo(){
         for(Compromisso compromisso : compromissoList){
             String data = dataForm.format(compromisso.getData());
             String hora = horaForm.format(compromisso.getHora());
@@ -80,9 +80,9 @@ public final class ServicoImpressao {
         }
     }
     
-    public void imprimir(){
-        if(this.documento != null && this.documento.isOpen()){
-            this.documento.close();
+    public static void imprimir(){
+        if(documento != null && documento.isOpen()){
+            documento.close();
             try {
                 Desktop.getDesktop().open(new File("Relatório.pdf"));
             } catch (IOException ex) {
